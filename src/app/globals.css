@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Cormorant Garamond';
+  --font-body: 'Syne';
+  --font-mono: 'JetBrains Mono';
+  --gold: #ffffff;
+  --gold2: #ffffff;
+  --cyan: #ffffff;
+  --void: #020408;
+  --border: rgba(255, 255, 255, 0.15);
+  --surface: rgba(255, 255, 255, 0.05);
+  --muted: rgba(255, 255, 255, 0.7);
+  --text: #ffffff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Hide default cursor */
+*, *::before, *::after { cursor: none !important; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold2); }
+
+/* Selection */
+::selection { background: rgba(201, 168, 76, 0.25); color: var(--gold2); }
+
+/* Glass card utility */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-gold {
+  background: rgba(201, 168, 76, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+/* Gold text gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #c9a84c 0%, #f0d080 50%, #c9a84c 100%);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+/* Display font utility */
+.font-display { font-family: 'Cormorant Garamond', serif; }
+.font-mono-custom { font-family: 'JetBrains Mono', monospace; }
+
+/* Glow effects */
+.glow-gold { box-shadow: 0 0 30px rgba(201, 168, 76, 0.3); }
+.glow-cyan { box-shadow: 0 0 30px rgba(0, 212, 255, 0.3); }
+.text-glow-gold { text-shadow: 0 0 20px rgba(201, 168, 76, 0.5); }
+
+/* Button base */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: transparent;
+  padding: 0.9rem 2.2rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: color 0.35s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover { color: var(--void); }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+  padding: 0.9rem 2.2rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-secondary:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* Section labels */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* Noise overlay */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* Timeline connector */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--gold), transparent);
+  opacity: 0.2;
+}
+
+/* Animated underline on hover */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.hover-underline:hover::after { width: 100%; }
+
+/* Loader */
+.loader-bar {
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--cyan), var(--gold));
+  background-size: 200%;
+  animation: shimmer 1s linear infinite;
+}
+
+/* Project card gradient overlays */
+.proj-overlay {
+  background: linear-gradient(180deg, transparent 0%, rgba(2, 4, 8, 0.95) 100%);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--cyan));
+  z-index: 9999;
+  transform-origin: left;
+}
+
+/* Tag pills */
+.tag-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(90, 102, 128, 1);
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.tag-pill:hover {
+  border-color: rgba(201, 168, 76, 0.35);
+  color: rgba(201, 168, 76, 0.8);
+}
+.tag-pill-gold {
+  background: rgba(201, 168, 76, 0.08);
+  border-color: rgba(201, 168, 76, 0.25);
+  color: rgba(201, 168, 76, 0.8);
+}
+.tag-pill-cyan {
+  background: rgba(0, 212, 255, 0.06);
+  border-color: rgba(0, 212, 255, 0.2);
+  color: rgba(0, 212, 255, 0.8);
+}
+
+/* Mobile cursor hide */
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  *, *::before, *::after { cursor: auto !important; }
+  #cursor, #cursor-ring { display: none !important; }
+}
