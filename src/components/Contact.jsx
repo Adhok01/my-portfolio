@@ -203,6 +203,7 @@ export default function Contact() {
               {/* Submit button */}
               <motion.button
                 type="submit"
+                className="btn-primary"
                 disabled={status === 'sending' || status === 'sent'}
                 whileHover={status === 'idle' ? { scale: 1.01 } : {}}
                 whileTap={status === 'idle' ? { scale: 0.99 } : {}}
@@ -211,9 +212,8 @@ export default function Contact() {
                   border: `1px solid ${status === 'sent' ? 'rgba(52,211,153,0.5)' : status === 'error' ? 'rgba(239,68,68,0.5)' : 'rgba(255,255,255,0.4)'}`,
                   background: status === 'sent' ? 'rgba(52,211,153,0.08)' : status === 'error' ? 'rgba(239,68,68,0.08)' : 'transparent',
                   color: status === 'sent' ? '#34d399' : status === 'error' ? '#ef4444' : '#ffffff',
-                  fontFamily: "'Syne', sans-serif", fontSize: '0.78rem',
+                  fontSize: '0.78rem',
                   letterSpacing: '0.2em', textTransform: 'uppercase',
-                  transition: 'all 0.3s', position: 'relative', overflow: 'hidden',
                 }}
               >
                 <AnimatePresence mode="wait">
@@ -222,7 +222,7 @@ export default function Contact() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    style={{ display: 'block' }}
+                    style={{ display: 'block', position: 'relative', zIndex: 1 }}
                   >
                     {status === 'idle' && 'Send Message →'}
                     {status === 'sending' && 'Sending…'}

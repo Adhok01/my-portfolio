@@ -11,6 +11,9 @@ export const portfolioData = {
     phone: '+91 63624 57628',
     location: 'Bengaluru, India',
     linkedin: 'https://linkedin.com/in/Adhokshaja-Srinivas',
+    github: 'https://github.com/adhok01',
+    x: 'https://x.com/AdhokshajaSN',
+    instagram: 'https://instagram.com/adhok_18',
     resume: '/resume.pdf',
   },
 
@@ -23,7 +26,7 @@ export const portfolioData = {
 
   education: [
     {
-      degree: 'MBA in Marketing',
+      degree: 'MBA in Marketing & Product Management',
       school: 'CMS Business School',
       location: 'Bangalore, India',
       period: 'Aug 2025 – May 2027',
@@ -32,7 +35,7 @@ export const portfolioData = {
       icon: '🎓',
     },
     {
-      degree: 'MS(R) Data Science & Analytics',
+      degree: 'MS by Research Data Science & AI',
       school: 'REVA University',
       location: 'Bangalore, India',
       period: 'Nov 2021 – Oct 2023',

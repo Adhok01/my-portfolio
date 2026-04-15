@@ -18,7 +18,8 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 2200)
+    // Sync with Loader.jsx (8s loading + 200ms delay + 2s welcome = 10.2s total)
+    const t = setTimeout(() => setLoaded(true), 10200)
     return () => clearTimeout(t)
   }, [])
 

@@ -22,7 +22,6 @@ const tools = [
 ]
 
 const row1 = [...tools, ...tools, ...tools]
-const row2 = [...tools.slice(8), ...tools.slice(0, 8), ...tools.slice(8), ...tools.slice(0, 8), ...tools.slice(8), ...tools.slice(0, 8)]
 
 function IconCard({ tool }) {
   return (
@@ -143,7 +142,7 @@ export default function Skills() {
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: 'clamp(3rem, 5.5vw, 5.5rem)',
             fontWeight: 700, lineHeight: 1, marginBottom: '1rem',
-            color: '#ffffff'
+            color: '#0066FF'
           }}
         >Technologies</motion.h2>
 
@@ -158,8 +157,8 @@ export default function Skills() {
         <div style={{
           height: '2px',
           background: '#050a14',
-          borderTop: '1px solid rgba(0,0,0,0.8)',
-          borderBottom: '1px solid rgba(255,255,255,0.05)',
+          borderTop: '1px solid rgba(0, 102, 255, 0.4)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
           marginTop: '3rem',
           boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.3)',
           width: '100px',
@@ -175,15 +174,6 @@ export default function Skills() {
         style={{ marginBottom: '1.2rem' }}
       >
         <MarqueeRow items={row1} direction="left" duration={45} />
-      </motion.div>
-
-      {/* Row 2 — right */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: 0.38 }}
-      >
-        <MarqueeRow items={row2} direction="right" duration={55} />
       </motion.div>
 
       {/* Soft skill pills */}
@@ -204,14 +194,14 @@ export default function Skills() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.55 + i * 0.022 }}
-            whileHover={{ background: 'rgba(96,165,250,0.1)', borderColor: 'rgba(96,165,250,0.3)', color: '#93c5fd', y: -2 }}
+            whileHover={{ background: 'rgba(0, 102, 255, 0.1)', borderColor: 'rgba(0, 102, 255, 0.3)', color: '#00D4FF', y: -2 }}
             style={{
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.62rem', padding: '0.32rem 0.82rem',
               borderRadius: 100,
-              border: '1px solid rgba(255,255,255,0.07)',
-              background: 'rgba(255,255,255,0.025)',
-              color: 'rgba(255,255,255,0.3)',
+              border: '1px solid rgba(0, 102, 255, 0.15)',
+              background: 'rgba(0, 102, 255, 0.05)',
+              color: 'rgba(255, 255, 255, 0.5)',
               letterSpacing: '0.05em', transition: 'all 0.2s', cursor: 'none',
             }}
           >{skill}</motion.span>

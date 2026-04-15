@@ -64,15 +64,17 @@ export default function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="hover-underline"
+                className="btn-primary"
                 style={{
-                  fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase',
+                  fontSize: '0.65rem', letterSpacing: '0.22em', textTransform: 'uppercase',
                   textDecoration: 'none',
                   color: active === l.href.slice(1) ? 'var(--gold)' : 'var(--muted)',
-                  transition: 'color 0.3s',
+                  padding: '0.5rem 1rem',
+                  border: active === l.href.slice(1) ? '1px solid var(--gold)' : '1px solid transparent',
+                  background: 'transparent',
                 }}
               >
-                {l.label}
+                <span>{l.label}</span>
               </a>
             </li>
           ))}
@@ -81,6 +83,8 @@ export default function Navbar() {
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <a
             href={portfolioData.personal.resume}
+            target="_blank"
+            rel="noreferrer"
             className="btn-primary"
             style={{ padding: '0.5rem 1.2rem', fontSize: '0.72rem' }}
           >

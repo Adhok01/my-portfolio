@@ -1,14 +1,21 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Github, Linkedin, Instagram, Mail, ExternalLink } from 'lucide-react'
 import { portfolioData } from '@/data/portfolio'
 
 const { personal, stats, marqueeItems } = portfolioData
 
+const XIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+  </svg>
+)
+
 export default function Hero() {
   const tiltRef = useRef(null)
   const tiltInner = useRef(null)
-  const roles = ['STRATEGY', 'RESEARCH', 'ANALYTICS', 'AI PRODUCT']
+  const roles = ['AI Product Management', 'AI Engineer', 'ANALYTICS', 'Data Scientist']
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -112,9 +119,9 @@ export default function Hero() {
             textShadow: '0 0 15px rgba(0, 106, 255, 0.8), 0 0 30px rgba(0, 106, 255, 0.4), 0 0 45px rgba(0, 106, 255, 0.2)',
             animation: 'glowPulse 3s ease-in-out infinite alternate',
           }}>
-            Adhokshaja
+            Hi, I'm
             <br />
-            <span style={{ fontWeight: 800 }}>Nagarhalli</span>
+            <span style={{ fontWeight: 800 }}>Adhokshaja</span>
           </motion.h1>
 
           <motion.div variants={itemVariants} style={{
@@ -152,9 +159,8 @@ export default function Hero() {
           </motion.p>
 
           <motion.div variants={itemVariants} style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap' }}>
-            <a href={personal.resume} className="btn-primary"><span>⬇ Resume</span></a>
-            <a href="#contact" className="btn-secondary">Get In Touch</a>
-            <a href={personal.linkedin} target="_blank" rel="noreferrer" className="btn-secondary">LinkedIn →</a>
+            <a href={personal.resume} target="_blank" rel="noreferrer" className="btn-primary"><span>⬇ Resume</span></a>
+            <a href="#contact" className="btn-primary"><span>Get In Touch</span></a>
           </motion.div>
 
           {/* Stats row */}
@@ -176,6 +182,70 @@ export default function Hero() {
               </div>
             ))}
           </motion.div>
+        </motion.div>
+
+        {/* Right - Socials */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 3, duration: 1 }}
+          style={{
+            position: 'absolute',
+            right: '3rem',
+          top: '48%',
+          transform: 'translateY(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2.2rem',
+          alignItems: 'center',
+          zIndex: 10
+        }}
+        className="hero-socials"
+      >
+        {/* Vertical line with glow */}
+        <div style={{ 
+          width: '1px', 
+          height: '60px', 
+          background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.3))',
+          boxShadow: '0 0 10px rgba(0, 106, 255, 0.2)'
+        }} />
+          
+          {[
+            { Icon: Github, href: personal.github, label: 'GitHub' },
+            { Icon: Linkedin, href: personal.linkedin, label: 'LinkedIn' },
+            { Icon: XIcon, href: personal.x, label: 'X' },
+            { Icon: Instagram, href: personal.instagram, label: 'Instagram' }
+          ].map((social, i) => (
+            <motion.a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={social.label}
+              whileHover={{ 
+                y: -5, 
+                color: '#ffffff',
+                textShadow: '0 0 8px rgba(255,255,255,0.8)'
+              }}
+              style={{
+                color: 'rgba(255,255,255,0.6)',
+                transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0.5rem',
+              }}
+            >
+              {typeof social.Icon === 'function' ? <social.Icon /> : <social.Icon size={24} strokeWidth={1.5} />}
+            </motion.a>
+          ))}
+
+          <div style={{ 
+            width: '1px', 
+            height: '60px', 
+            background: 'linear-gradient(to top, transparent, rgba(255,255,255,0.3))',
+            boxShadow: '0 0 10px rgba(0, 106, 255, 0.2)'
+          }} />
         </motion.div>
       </div>
 
@@ -207,7 +277,20 @@ export default function Hero() {
           to { text-shadow: 0 0 25px rgba(0, 106, 255, 0.9), 0 0 50px rgba(0, 106, 255, 0.5), 0 0 70px rgba(0, 106, 255, 0.3); }
         }
         @keyframes blink { 0%,100% { opacity: 1 } 50% { opacity: 0 } }
-        @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 900px) { 
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-socials { 
+            position: relative !important;
+            flex-direction: row !important;
+            right: auto !important;
+            top: auto !important;
+            transform: none !important;
+            margin-top: 3rem;
+            width: 100%;
+            justify-content: center;
+          }
+          .hero-socials div { display: none; }
+        }
       `}</style>
     </section>
   )
