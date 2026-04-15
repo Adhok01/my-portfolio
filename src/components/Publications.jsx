@@ -35,7 +35,7 @@ function PubCard({ pub, index }) {
         <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: '#ffffff', opacity: 0.6, letterSpacing: '0.2em', marginBottom: '0.5rem', textTransform: 'uppercase' }}>{pub.venue}</div>
         <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.15rem', fontWeight: 600, marginBottom: '0.5rem' }}>{pub.title}</div>
         <div style={{ fontSize: '0.83rem', color: 'var(--muted)', lineHeight: 1.7, marginBottom: '0.8rem' }}>{pub.desc}</div>
-        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: pub.link ? '1.5rem' : '0' }}>
           {pub.tags.map(t => (
             <span key={t} style={{
               fontFamily: "'JetBrains Mono', monospace",
@@ -46,6 +46,26 @@ function PubCard({ pub, index }) {
             }}>{t}</span>
           ))}
         </div>
+        {pub.link && (
+          <a
+            href={pub.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.65rem', color: '#00D4FF',
+              textTransform: 'uppercase', letterSpacing: '0.12em',
+              textDecoration: 'none', transition: 'all 0.2s',
+              borderBottom: '1px solid rgba(0, 212, 255, 0.2)',
+              paddingBottom: '2px',
+            }}
+            onMouseOver={(e) => e.target.style.borderBottomColor = 'rgba(0, 212, 255, 1)'}
+            onMouseOut={(e) => e.target.style.borderBottomColor = 'rgba(0, 212, 255, 0.2)'}
+          >
+            Read Full Research ↗
+          </a>
+        )}
       </div>
       <style>{`@media (max-width: 540px) { .pub-grid-inner { grid-template-columns: 1fr !important; } }`}</style>
     </motion.div>

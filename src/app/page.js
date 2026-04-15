@@ -6,6 +6,7 @@ import ScrollProgress from '@/components/ScrollProgress'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
+import Education from '@/components/Education'
 import Skills from '@/components/Skills'
 import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
@@ -18,22 +19,39 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
+    // Check if the loader has already run in this session
+    const isLoaded = sessionStorage.getItem('portfolio-loaded')
+    if (isLoaded) {
+      setLoaded(true)
+      return
+    }
+
     // Sync with Loader.jsx (8s loading + 200ms delay + 2s welcome = 10.2s total)
-    const t = setTimeout(() => setLoaded(true), 10200)
+    const t = setTimeout(() => {
+      setLoaded(true)
+      sessionStorage.setItem('portfolio-loaded', 'true')
+    }, 10200)
     return () => clearTimeout(t)
   }, [])
+
+  // Disable transition if already loaded to avoid flicker
+  const skipTransition = typeof window !== 'undefined' && sessionStorage.getItem('portfolio-loaded')
 
   return (
     <>
       <Cursor />
       <ScrollProgress />
       {!loaded && <Loader />}
-      <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.8s ease' }}>
+      <div style={{ 
+        opacity: loaded ? 1 : 0, 
+        transition: skipTransition ? 'none' : 'opacity 0.8s ease' 
+      }}>
         <Background3D />
         <Navbar />
         <main>
           <Hero />
           <About />
+          <Education />
           <Skills />
           <Experience />
           <Projects />

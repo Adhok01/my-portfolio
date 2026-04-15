@@ -102,47 +102,6 @@ function ExpCard({ exp, index }) {
   )
 }
 
-function EduCard({ edu, index }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.4, 0, 0.2, 1] }}
-      whileHover={{ x: 6, borderColor: 'rgba(201,168,76,0.35)' }}
-      style={{
-        padding: '2.5rem',
-        border: '1px solid rgba(255,255,255,0.07)',
-        background: 'rgba(255,255,255,0.02)',
-        position: 'relative', overflow: 'hidden',
-        transition: 'all 0.3s',
-      }}
-    >
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={inView ? { scaleX: 1 } : {}}
-        transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
-        style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, height: 2,
-          background: 'linear-gradient(90deg, transparent, var(--gold), transparent)',
-          transformOrigin: 'left',
-        }}
-      />
-
-      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', color: 'var(--muted)', letterSpacing: '0.15em', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-        <span style={{ width: 16, height: 1, background: 'var(--gold)', opacity: 0.4, display: 'inline-block' }} />
-        {edu.period}
-      </div>
-      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.4rem', fontWeight: 600, lineHeight: 1.2, marginBottom: '0.5rem' }}>{edu.degree}</div>
-      <div style={{ fontSize: '0.75rem', color: '#ffffff', opacity: 0.7, letterSpacing: '0.08em', marginBottom: '1.5rem' }}>{edu.school} · {edu.location}</div>
-      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '2.5rem', fontWeight: 700, color: '#ffffff', opacity: 0.25 }}>{edu.gpa}</div>
-    </motion.div>
-  )
-}
-
 export default function Experience() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
@@ -166,23 +125,9 @@ export default function Experience() {
           </motion.div>
         </div>
 
-        <div style={{ marginBottom: '8rem' }}>
+        <div style={{ marginBottom: '0rem' }}>
           {portfolioData.experience.map((exp, i) => (
             <ExpCard key={exp.company} exp={exp} index={i} />
-          ))}
-        </div>
-
-        {/* Education */}
-        <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '2rem', marginBottom: '4rem', display: 'flex', alignItems: 'flex-end' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--gold)', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>04B</div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 3.5vw, 3.5rem)', fontWeight: 300, lineHeight: 1 }}>Education</h2>
-          </motion.div>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1px', background: 'rgba(255,255,255,0.04)' }}>
-          {portfolioData.education.map((edu, i) => (
-            <EduCard key={edu.school} edu={edu} index={i} />
           ))}
         </div>
       </div>

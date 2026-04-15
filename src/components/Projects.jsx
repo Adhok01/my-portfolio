@@ -1,6 +1,7 @@
 'use client'
-import { useRef, useState } from 'react'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useRef } from 'react'
+import { useRouter } from 'next/navigation'
+import { motion, useInView } from 'framer-motion'
 import { portfolioData } from '@/data/portfolio'
 
 function ProjectCard({ project, index, onClick }) {
@@ -28,10 +29,11 @@ function ProjectCard({ project, index, onClick }) {
       transition={{ duration: 0.8, delay: index * 0.12, ease: [0.4, 0, 0.2, 1] }}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      onClick={() => onClick(project)}
+      onClick={() => onClick(project.slug)}
       style={{
-        perspective: 1000, cursor: 'none',
+        perspective: 1000,
         position: 'relative',
+        cursor: 'pointer',
       }}
     >
       <div
@@ -112,81 +114,14 @@ function ProjectCard({ project, index, onClick }) {
   )
 }
 
-function ProjectModal({ project, onClose }) {
-  return (
-    <AnimatePresence>
-      {project && (
-        <motion.div
-          key="modal-bg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 800,
-            background: 'rgba(2,4,8,0.95)',
-            backdropFilter: 'blur(20px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '2rem',
-          }}
-        >
-          <motion.div
-            key="modal-box"
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            onClick={e => e.stopPropagation()}
-            style={{
-              maxWidth: 680, width: '100%',
-              background: 'rgba(5,12,20,0.98)',
-              border: `1px solid rgba(255,255,255,0.15)`,
-              padding: '3.5rem',
-              position: 'relative',
-              boxShadow: `0 0 80px rgba(255,255,255,0.05)`,
-            }}
-          >
-            {/* Close */}
-            <button
-              onClick={onClose}
-              style={{
-                position: 'absolute', top: '1.5rem', right: '1.5rem',
-                background: 'none', border: '1px solid rgba(255,255,255,0.1)',
-                color: 'var(--muted)', width: 36, height: 36,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '1rem', transition: 'all 0.2s',
-              }}
-            >✕</button>
-
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: '#ffffff', letterSpacing: '0.2em', marginBottom: '1rem', textTransform: 'uppercase', opacity: 0.6 }}>
-              {project.category}
-            </div>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '2rem', fontWeight: 600, lineHeight: 1.2, marginBottom: '1.5rem' }}>{project.title}</h3>
-            <p style={{ fontSize: '0.92rem', color: 'var(--muted)', lineHeight: 1.9, marginBottom: '2rem' }}>{project.long}</p>
-
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-              <span style={{ fontSize: '0.7rem', color: 'var(--muted)', letterSpacing: '0.15em', textTransform: 'uppercase', marginRight: '0.5rem', alignSelf: 'center' }}>Stack:</span>
-              {project.tools.map(t => (
-                <span key={t} style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: '0.65rem', padding: '0.3rem 0.75rem',
-                  background: 'rgba(255,255,255,0.07)',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  color: '#ffffff',
-                }}>{t}</span>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
 export default function Projects() {
   const ref = useRef(null)
+  const router = useRouter()
   const inView = useInView(ref, { once: true, margin: '-100px' })
-  const [selected, setSelected] = useState(null)
+
+  const handleProjectClick = (slug) => {
+    router.push(`/project?id=${slug}`)
+  }
 
   return (
     <section
@@ -206,12 +141,10 @@ export default function Projects() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1px', background: 'rgba(255,255,255,0.04)' }}>
           {portfolioData.projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} onClick={setSelected} />
+            <ProjectCard key={p.id} project={p} index={i} onClick={handleProjectClick} />
           ))}
         </div>
       </div>
-
-      <ProjectModal project={selected} onClose={() => setSelected(null)} />
     </section>
   )
 }

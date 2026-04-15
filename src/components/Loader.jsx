@@ -5,6 +5,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 export default function Loader() {
   const [progress, setProgress] = useState(0)
   const [phase, setPhase] = useState(0) // 0=loading, 1=revealing name, 2=exit
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (isClient && sessionStorage.getItem('portfolio-loaded')) return null
 
   useEffect(() => {
     // 8 seconds for progress (8000ms)
