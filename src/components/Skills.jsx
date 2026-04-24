@@ -1,6 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import Counter from '@/components/Counter'
 
 const tools = [
   { name: 'Power BI',     icon: '📊', color: '#f2c811', border: 'rgba(242,200,17,0.25)' },
@@ -132,7 +133,7 @@ export default function Skills() {
             fontSize: '0.65rem', color: 'var(--gold)',
             letterSpacing: '0.3em', textTransform: 'uppercase', marginBottom: '1rem',
           }}
-        >03 — Toolkit</motion.p>
+        ><Counter value="03" /> — Toolkit</motion.p>
 
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
@@ -144,14 +145,14 @@ export default function Skills() {
             fontWeight: 700, lineHeight: 1, marginBottom: '1rem',
             color: '#0066FF'
           }}
-        >Technologies</motion.h2>
+        >Tech Stack</motion.h2>
 
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.18 }}
           style={{ fontSize: '1rem', color: '#ffffff', letterSpacing: '0.01em', opacity: 0.8 }}
-        >Tools and technologies I use to bring ideas to life</motion.p>
+        >The specialized tools and frameworks behind my research and analytics</motion.p>
         
         {/* 3D Line */}
         <div style={{

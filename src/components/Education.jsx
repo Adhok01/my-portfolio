@@ -2,6 +2,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { portfolioData } from '@/data/portfolio'
+import Counter from '@/components/Counter'
 
 function EduCard({ edu, index }) {
   const ref = useRef(null)
@@ -112,7 +113,7 @@ function EduCard({ edu, index }) {
           color: '#ffffff',
           lineHeight: 1
         }}>
-          {edu.gpa}
+          <Counter value={edu.gpa} />
         </span>
       </div>
     </motion.div>
@@ -134,7 +135,7 @@ export default function Education() {
       <div style={{ maxWidth: 1300, margin: '0 auto' }}>
         <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '2rem', marginBottom: '4rem', display: 'flex', alignItems: 'flex-end' }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--gold)', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>02</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--gold)', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '0.6rem' }}><Counter value="02" /></div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 3.5vw, 3.5rem)', fontWeight: 300, lineHeight: 1 }}>Education</h2>
           </motion.div>
         </div>

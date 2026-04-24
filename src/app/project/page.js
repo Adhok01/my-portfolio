@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { portfolioData } from '@/data/portfolio'
 import Link from 'next/link'
 import { Suspense } from 'react'
-import Cursor from '@/components/Cursor'
 import Background3D from '@/components/Background3D'
 
 function ProjectDetailContent() {
@@ -30,7 +29,6 @@ function ProjectDetailContent() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#020408', color: '#fff' }}>
-      <Cursor />
       <Background3D />
       
       <div style={{ position: 'relative', zIndex: 1, padding: '4rem 2rem' }}>

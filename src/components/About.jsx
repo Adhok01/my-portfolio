@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { portfolioData } from '@/data/portfolio'
+import Counter from '@/components/Counter'
 
 const { personal } = portfolioData
 const metrics = [
@@ -115,7 +116,7 @@ export default function About() {
                     fontFamily: "'Cormorant Garamond', serif",
                     fontSize: '2.8rem', fontWeight: 700,
                     color: 'var(--gold)', lineHeight: 1, display: 'block',
-                  }}>{m.num}</span>
+                  }}><Counter value={m.num} /></span>
                   <span style={{ fontSize: '0.72rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '0.3rem', display: 'block' }}>{m.label}</span>
                 </motion.div>
               ))}

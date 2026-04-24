@@ -1,8 +1,10 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import { useTheme } from '@/context/ThemeContext'
 
 export default function Background3D() {
   const canvasRef = useRef(null)
+  const { theme } = useTheme()
 
   useEffect(() => {
     let THREE, renderer, scene, camera, points, ico1, ico2
@@ -95,6 +97,9 @@ export default function Background3D() {
         position: 'fixed', top: 0, left: 0,
         width: '100%', height: '100%',
         zIndex: 0, pointerEvents: 'none',
+        opacity: theme === 'light' ? 0.3 : 1,
+        filter: theme === 'light' ? 'invert(1)' : 'none',
+        transition: 'opacity 0.8s, filter 0.8s'
       }}
     />
   )

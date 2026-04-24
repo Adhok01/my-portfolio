@@ -3,147 +3,238 @@ import { useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useInView } from 'framer-motion'
 import { portfolioData } from '@/data/portfolio'
+import Counter from '@/components/Counter'
 
-function ProjectCard({ project, index, onClick }) {
+function CategoryCard({ category, index, onClick }) {
   const ref = useRef(null)
-  const tiltRef = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
-  const onMouseMove = (e) => {
-    const el = tiltRef.current
-    if (!el) return
-    const r = el.getBoundingClientRect()
-    const x = ((e.clientX - r.left) / r.width - 0.5) * 18
-    const y = -((e.clientY - r.top) / r.height - 0.5) * 18
-    el.style.transform = `rotateY(${x}deg) rotateX(${y}deg) translateZ(10px)`
-  }
-  const onMouseLeave = () => {
-    if (tiltRef.current) tiltRef.current.style.transform = 'rotateY(0) rotateX(0) translateZ(0)'
-  }
+  const inView = useInView(ref, { once: true, margin: '-50px' })
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: index * 0.12, ease: [0.4, 0, 0.2, 1] }}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      onClick={() => onClick(category.id)}
+      style={{
+        background: 'rgba(255,255,255,0.02)',
+        border: '1px solid var(--border)',
+        borderRadius: '16px',
+        padding: '2rem',
+        cursor: 'pointer',
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+      }}
+      whileHover={{ 
+        y: -10, 
+        backgroundColor: 'rgba(255,255,255,0.04)',
+        borderColor: category.color,
+        boxShadow: `0 20px 40px -20px ${category.color}44`
+      }}
+      className="group"
+    >
+      <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>{category.icon}</div>
+      <h3 style={{ 
+        fontFamily: "'Syne', sans-serif", 
+        fontSize: '1.5rem', 
+        fontWeight: 700, 
+        marginBottom: '0.75rem',
+        color: 'var(--text)'
+      }}>
+        {category.title}
+      </h3>
+      <p style={{ 
+        fontSize: '0.9rem', 
+        color: 'var(--muted)', 
+        lineHeight: 1.6,
+        marginBottom: '1.5rem'
+      }}>
+        {category.desc}
+      </p>
+      
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '0.5rem', 
+        fontSize: '0.75rem', 
+        color: category.color,
+        fontWeight: 600,
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em'
+      }}>
+        Explore Projects 
+        <span style={{ transition: 'transform 0.3s' }} className="group-hover:translate-x-1">→</span>
+      </div>
+
+      {/* Decorative background glow */}
+      <div style={{
+        position: 'absolute',
+        top: '-20%',
+        right: '-20%',
+        width: '150px',
+        height: '150px',
+        background: category.color,
+        filter: 'blur(80px)',
+        opacity: 0.05,
+        pointerEvents: 'none'
+      }} />
+    </motion.div>
+  )
+}
+
+function FeaturedProject({ project, onClick }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.8 }}
       onClick={() => onClick(project.slug)}
       style={{
-        perspective: 1000,
-        position: 'relative',
+        width: '100%',
+        background: 'rgba(255,255,255,0.03)',
+        border: '1px solid var(--border)',
+        borderRadius: '24px',
+        padding: '3rem',
+        marginBottom: '5rem',
+        display: 'grid',
+        gridTemplateColumns: '1.2fr 0.8fr',
+        gap: '4rem',
         cursor: 'pointer',
+        position: 'relative',
+        overflow: 'hidden'
       }}
+      whileHover={{ borderColor: 'rgba(255,255,255,0.2)' }}
     >
-      <div
-        ref={tiltRef}
-        style={{
-          background: 'rgba(255,255,255,0.02)',
-          border: '1px solid rgba(255,255,255,0.07)',
-          padding: '2.5rem',
-          position: 'relative', overflow: 'hidden',
-          transformStyle: 'preserve-3d',
-          transition: 'transform 0.12s linear, box-shadow 0.3s',
-        }}
-      >
-        {/* Color accent glow */}
-        <div style={{
-          position: 'absolute', top: -40, right: -40,
-          width: 120, height: 120, borderRadius: '50%',
-          background: `radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%)`,
-          pointerEvents: 'none',
-        }} />
-
-        <div style={{
-          fontFamily: "'JetBrains Mono', monospace",
-          fontSize: '0.62rem', color: 'var(--gold)', opacity: 0.4,
-          letterSpacing: '0.2em', marginBottom: '2rem',
+      <div>
+        <div style={{ 
+          fontFamily: "'JetBrains Mono', monospace", 
+          fontSize: '0.7rem', 
+          color: 'var(--gold)', 
+          letterSpacing: '0.3em', 
+          textTransform: 'uppercase',
+          marginBottom: '1rem'
         }}>
-          {String(index + 1).padStart(2, '0')} / {String(portfolioData.projects.length).padStart(2, '0')}
+          Featured Project
         </div>
-
-        <div style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: '1.4rem', fontWeight: 600,
-          lineHeight: 1.3, marginBottom: '1rem',
-        }}>{project.title}</div>
-
-        <div style={{ fontSize: '0.85rem', color: 'var(--muted)', lineHeight: 1.8, marginBottom: '2rem' }}>
+        <h2 style={{ 
+          fontFamily: "'Cormorant Garamond', serif", 
+          fontSize: 'clamp(2rem, 4vw, 3rem)', 
+          fontWeight: 300, 
+          marginBottom: '1.5rem',
+          lineHeight: 1.1
+        }}>
+          {project.title}
+        </h2>
+        <p style={{ 
+          color: 'var(--muted)', 
+          fontSize: '1.1rem', 
+          lineHeight: 1.8, 
+          marginBottom: '2rem',
+          maxWidth: '90%'
+        }}>
           {project.desc}
-        </div>
-
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem' }}>
-          {project.tools.map(t => (
-            <span key={t} style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: '0.62rem', padding: '0.28rem 0.7rem',
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.18)',
-              color: '#ffffff', letterSpacing: '0.08em',
-            }}>{t}</span>
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '2.5rem' }}>
+          {project.tools.map(tool => (
+            <span key={tool} className="tag-pill">{tool}</span>
           ))}
         </div>
-
-        {/* View button */}
-        <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          whileHover={{ opacity: 1, y: 0 }}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
-            fontSize: '0.75rem', color: 'var(--gold)',
-            letterSpacing: '0.12em', textTransform: 'uppercase',
-            fontWeight: 600,
-          }}
-        >
-          View Details ↗
-        </motion.div>
-
-        {/* Bottom line */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileHover={{ scaleX: 1 }}
-          style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0, height: 2,
-            background: `linear-gradient(90deg, transparent, #ffffff, transparent)`,
-            transformOrigin: 'left',
-          }}
-        />
+        <div className="btn-primary">
+          <span>View Impact Report</span>
+        </div>
+      </div>
+      
+      <div style={{ 
+        position: 'relative',
+        background: 'rgba(255,255,255,0.02)',
+        borderRadius: '16px',
+        border: '1px solid var(--border)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ 
+            fontFamily: "'Syne', sans-serif", 
+            fontSize: '3rem', 
+            fontWeight: 800, 
+            color: 'var(--text)',
+            marginBottom: '0.5rem'
+          }}>
+            <Counter value={project.impact.split(' ')[0]} />
+          </div>
+          <div style={{ 
+            fontFamily: "'JetBrains Mono', monospace", 
+            fontSize: '0.75rem', 
+            color: 'var(--muted)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em'
+          }}>
+            {project.impact.split(' ').slice(1).join(' ')}
+          </div>
+        </div>
       </div>
     </motion.div>
   )
 }
 
 export default function Projects() {
-  const ref = useRef(null)
   const router = useRouter()
-  const inView = useInView(ref, { once: true, margin: '-100px' })
+  const featuredProject = portfolioData.projects.find(p => p.featured) || portfolioData.projects[0]
+
+  const handleCategoryClick = (id) => {
+    router.push(`/projects/${id}`)
+  }
 
   const handleProjectClick = (slug) => {
     router.push(`/project?id=${slug}`)
   }
 
   return (
-    <section
-      id="projects"
-      ref={ref}
-      style={{ padding: '9rem 3rem', position: 'relative', zIndex: 1 }}
-    >
-      <div style={{ maxWidth: 1300, margin: '0 auto' }}>
-        <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '2rem', marginBottom: '4rem' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--gold)', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>05</div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 3.5vw, 3.5rem)', fontWeight: 300, lineHeight: 1 }}>
-              Featured Projects
+    <section id="projects" style={{ padding: '10rem 3rem', position: 'relative' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        
+        <div style={{ marginBottom: '6rem', textAlign: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="section-label" style={{ marginBottom: '1rem' }}>05 // Expertise</div>
+            <h2 style={{ 
+              fontFamily: "'Cormorant Garamond', serif", 
+              fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', 
+              fontWeight: 300,
+              lineHeight: 1
+            }}>
+              Project Domains
             </h2>
           </motion.div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1px', background: 'rgba(255,255,255,0.04)' }}>
-          {portfolioData.projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} onClick={handleProjectClick} />
+        <FeaturedProject project={featuredProject} onClick={handleProjectClick} />
+
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', 
+          gap: '2rem' 
+        }}>
+          {portfolioData.projectCategories.map((cat, i) => (
+            <CategoryCard 
+              key={cat.id} 
+              category={cat} 
+              index={i} 
+              onClick={handleCategoryClick} 
+            />
           ))}
         </div>
+
       </div>
     </section>
   )

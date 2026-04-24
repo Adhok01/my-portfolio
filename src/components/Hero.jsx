@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, Linkedin, Instagram, Mail, ExternalLink } from 'lucide-react'
 import { portfolioData } from '@/data/portfolio'
+import Counter from '@/components/Counter'
 
 const { personal, stats, marqueeItems } = portfolioData
 
@@ -99,7 +100,7 @@ export default function Hero() {
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.72rem', letterSpacing: '0.3em',
               color: 'var(--gold)', textTransform: 'uppercase',
-            }}>Portfolio · 2025</span>
+            }}>Portfolio · <Counter value="2026" /></span>
             <span style={{
               width: 6, height: 6, borderRadius: '50%',
               background: '#00D4FF',
@@ -177,7 +178,7 @@ export default function Hero() {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: '2.4rem', fontWeight: 700,
                   color: '#ffffff', lineHeight: 1,
-                }}>{s.num}</div>
+                }}><Counter value={s.num} /></div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.4rem', lineHeight: 1.4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
               </div>
             ))}
@@ -249,15 +250,25 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Marquee */}
       <div style={{
         width: '100%', marginTop: '5rem',
         borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)',
         padding: '1.5rem 0', overflow: 'hidden',
         position: 'relative', zIndex: 2,
       }}>
-        <div style={{ display: 'flex', gap: '3rem', animation: 'marquee 25s linear infinite', whiteSpace: 'nowrap', width: 'max-content' }}>
-          {[...marqueeItems, ...marqueeItems].map((item, i) => (
+        <motion.div 
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ 
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 25,
+              ease: "linear",
+            },
+          }}
+          style={{ display: 'flex', gap: '3rem', whiteSpace: 'nowrap', width: 'max-content' }}
+        >
+          {[...marqueeItems, ...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
             <span key={i} style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: '1rem', fontStyle: 'italic',
@@ -268,7 +279,7 @@ export default function Hero() {
               <span style={{ fontSize: '0.4rem', color: 'var(--gold)', fontStyle: 'normal' }}>◆</span>
             </span>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <style>{`

@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { portfolioData } from '@/data/portfolio'
 
+import { useTheme } from '@/context/ThemeContext'
+import { Sun, Moon, Sparkles } from 'lucide-react'
+
 const links = [
   { href: '#about', label: 'About' },
   { href: '#education', label: 'Education' },
@@ -16,6 +19,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('')
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     const onScroll = () => {
@@ -31,6 +35,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const nextTheme = () => {
+    if (theme === 'night') toggleTheme('dark')
+    else if (theme === 'dark') toggleTheme('light')
+    else toggleTheme('night')
+  }
+
   return (
     <>
       <motion.nav
@@ -42,7 +52,7 @@ export default function Navbar() {
           padding: '1.3rem 3rem',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           transition: 'background 0.4s, backdrop-filter 0.4s, border-bottom 0.4s',
-          background: scrolled ? 'rgba(2,4,8,0.9)' : 'transparent',
+          background: scrolled ? 'rgba(var(--nav-bg), 0.9)' : 'transparent',
           backdropFilter: scrolled ? 'blur(24px)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
         }}
@@ -82,6 +92,28 @@ export default function Navbar() {
         </ul>
 
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          {/* Theme Toggle */}
+          <button
+            onClick={nextTheme}
+            style={{
+              background: 'none',
+              border: '1px solid var(--border)',
+              color: 'var(--gold)',
+              padding: '0.5rem',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s'
+            }}
+            title={`Switch from ${theme}`}
+          >
+            {theme === 'night' && <Sparkles size={16} />}
+            {theme === 'dark' && <Moon size={16} />}
+            {theme === 'light' && <Sun size={16} />}
+          </button>
+
           <a
             href={portfolioData.personal.resume}
             target="_blank"

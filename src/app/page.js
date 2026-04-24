@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Cursor from '@/components/Cursor'
 import Loader from '@/components/Loader'
 import ScrollProgress from '@/components/ScrollProgress'
 import Navbar from '@/components/Navbar'
@@ -39,7 +38,6 @@ export default function Home() {
 
   return (
     <>
-      <Cursor />
       <ScrollProgress />
       {!loaded && <Loader />}
       <div style={{ 

@@ -80,7 +80,7 @@ export default function Footer() {
           flexWrap: 'wrap', gap: '1rem',
         }}>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.1em' }}>
-            © 2025 <span style={{ color: '#0066FF', textTransform: 'uppercase', textShadow: '0 0 10px rgba(0, 106, 255, 0.4)' }}>{portfolioData.personal.name}</span>
+            © 2026 <span style={{ color: '#0066FF', textTransform: 'uppercase', textShadow: '0 0 10px rgba(0, 106, 255, 0.4)' }}>{portfolioData.personal.name}</span>
           </p>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.08em' }}>
             Built with Next.js · Framer Motion · GSAP · Three.js

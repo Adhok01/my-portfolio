@@ -1,4 +1,5 @@
 import './globals.css'
+import { ThemeProvider } from '@/context/ThemeContext'
 
 export const metadata = {
   title: 'Adhokshaja Nagarhalli — AI Product & Analytics',
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
       </head>
       <body className="noise">
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
