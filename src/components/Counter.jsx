@@ -6,10 +6,12 @@ export default function Counter({ value, duration = 2 }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-50px" })
   
+  const strValue = String(value)
+  
   // Extract number and suffix (e.g., "95%" -> 95, "%")
-  const numValue = parseFloat(value.replace(/[^0-9.]/g, ''))
-  const suffix = value.replace(/[0-9.]/g, '')
-  const prefix = value.startsWith('+') ? '+' : ''
+  const numValue = parseFloat(strValue.replace(/[^0-9.]/g, ''))
+  const suffix = strValue.replace(/[0-9.]/g, '')
+  const prefix = strValue.startsWith('+') ? '+' : ''
   
   const motionValue = useMotionValue(0)
   const springValue = useSpring(motionValue, {
@@ -27,10 +29,10 @@ export default function Counter({ value, duration = 2 }) {
   useEffect(() => {
     springValue.on("change", (latest) => {
       if (ref.current) {
-        ref.current.textContent = prefix + latest.toFixed(value.includes('.') ? 1 : 0) + suffix
+        ref.current.textContent = prefix + latest.toFixed(strValue.includes('.') ? 1 : 0) + suffix
       }
     })
-  }, [springValue, value, prefix, suffix])
+  }, [springValue, strValue, prefix, suffix])
 
   return <span ref={ref}>{isNaN(numValue) ? value : '0'}</span>
 }
