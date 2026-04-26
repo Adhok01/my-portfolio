@@ -203,7 +203,7 @@ function ProjectDetailContent() {
 
       <style jsx global>{`
         :root {
-          --gold: #0066FF;
+          --gold: #A78BFA;
           --muted: rgba(255,255,255,0.6);
         }
       `}</style>

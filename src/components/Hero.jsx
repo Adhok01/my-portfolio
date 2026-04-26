@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Github, Linkedin, Instagram, Mail, ExternalLink } from 'lucide-react'
 import { portfolioData } from '@/data/portfolio'
 import Counter from '@/components/Counter'
+import Butterfly from '@/components/Butterfly'
 
 const { personal, stats, marqueeItems } = portfolioData
 
@@ -61,27 +62,32 @@ export default function Hero() {
       style={{
         minHeight: '100vh', display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
-        padding: '6rem 3rem 0',
+        padding: '6rem 3rem 0 8rem',
         position: 'relative', zIndex: 1, overflow: 'hidden',
+        backgroundColor: '#020408',
+        backgroundImage: 'url("/hero-bg.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center right',
+        filter: 'brightness(0.7)',
       }}
     >
+      {/* Heavy dark overlay for constant high contrast */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to right, rgba(2, 4, 8, 0.95) 0%, rgba(2, 4, 8, 0.6) 40%, transparent 100%)',
+        zIndex: 1
+      }} />
       {/* Grid overlay */}
       <div style={{
         position: 'absolute', inset: 0,
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
         backgroundSize: '64px 64px',
-        maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
+        maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%)',
         pointerEvents: 'none',
       }} />
 
-      {/* Radial glow */}
-      <div style={{
-        position: 'absolute', top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 700, height: 700, borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(0, 102, 255, 0.07) 0%, transparent 70%)',
-        pointerEvents: 'none', animation: 'pulse_slow 4s ease-in-out infinite',
-      }} />
+      {/* Radial glow removed for sharpness */}
+      <Butterfly />
 
       <div style={{
         maxWidth: 1300, width: '100%',
@@ -90,7 +96,7 @@ export default function Hero() {
       }} className="hero-grid">
 
         {/* Left */}
-        <motion.div variants={containerVariants} initial="hidden" animate="visible">
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" style={{ position: 'relative', zIndex: 2 }}>
           <motion.div variants={itemVariants} style={{
             display: 'flex', alignItems: 'center', gap: '1rem',
             marginBottom: '2rem',
@@ -98,8 +104,9 @@ export default function Hero() {
             <div style={{ width: 40, height: 1, background: 'var(--gold)' }} />
             <span style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: '0.72rem', letterSpacing: '0.3em',
-              color: 'var(--gold)', textTransform: 'uppercase',
+              fontSize: '0.8rem', letterSpacing: '0.4em',
+              color: '#ffffff', textTransform: 'uppercase',
+              fontWeight: 700,
             }}>Portfolio · <Counter value="2026" /></span>
             <span style={{
               width: 6, height: 6, borderRadius: '50%',
@@ -113,25 +120,26 @@ export default function Hero() {
           <motion.h1 variants={itemVariants} style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: 'clamp(3rem, 6vw, 7.5rem)',
-            fontWeight: 700, lineHeight: 0.95,
+            fontWeight: 800, lineHeight: 0.95,
             letterSpacing: '-0.02em', marginBottom: '0.5rem',
             color: '#0066FF',
             textTransform: 'uppercase',
-            textShadow: '0 0 15px rgba(0, 106, 255, 0.8), 0 0 30px rgba(0, 106, 255, 0.4), 0 0 45px rgba(0, 106, 255, 0.2)',
-            animation: 'glowPulse 3s ease-in-out infinite alternate',
+            textShadow: '0 0 10px rgba(0, 102, 255, 0.8), 0 0 20px rgba(0, 102, 255, 0.4), 0 0 40px rgba(0, 102, 255, 0.2)',
+            animation: 'none',
           }}>
             Hi, I'm
             <br />
-            <span style={{ fontWeight: 800 }}>Adhokshaja</span>
+            <span style={{ fontWeight: 800, textShadow: '0 0 15px rgba(0, 102, 255, 1), 0 0 30px rgba(0, 102, 255, 0.6)' }}>Adhokshaja</span>
           </motion.h1>
 
           <motion.div variants={itemVariants} style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: '1.4rem', color: '#ffffff',
+            fontSize: '1.5rem', color: '#ffffff',
             letterSpacing: '0.15em', margin: '1.5rem 0',
             minHeight: '3rem',
             display: 'flex', alignItems: 'center',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            fontWeight: 700
           }}>
             <AnimatePresence mode="wait">
               <motion.span
@@ -153,10 +161,12 @@ export default function Hero() {
           </motion.div>
 
           <motion.p variants={itemVariants} style={{
-            fontSize: '1.1rem', color: 'var(--muted)',
-            lineHeight: 1.8, maxWidth: 600, marginBottom: '3rem',
+            fontSize: '1.25rem', color: '#ffffff',
+            lineHeight: 1.6, maxWidth: 650, marginBottom: '3rem',
+            fontWeight: 500,
+            textShadow: '0 2px 10px rgba(0,0,0,0.8)',
           }}>
-            {personal.tagline} Sitting at the intersection of <span style={{ color: '#ffffff' }}>AI, analytics, and business storytelling.</span>
+            {personal.tagline} Sitting at the intersection of <span style={{ color: 'var(--gold2)', fontWeight: 700, textDecoration: 'underline', textDecorationColor: 'rgba(0, 212, 255, 0.3)' }}>AI, analytics, and business storytelling.</span>
           </motion.p>
 
           <motion.div variants={itemVariants} style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap' }}>
@@ -176,10 +186,11 @@ export default function Hero() {
               <div key={s.label}>
                 <div style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: '2.4rem', fontWeight: 700,
+                  fontSize: '2.6rem', fontWeight: 800,
                   color: '#ffffff', lineHeight: 1,
+                  textShadow: '0 4px 12px rgba(0,0,0,0.4)',
                 }}><Counter value={s.num} /></div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.4rem', lineHeight: 1.4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</div>
+                <div style={{ fontSize: '0.85rem', color: '#ffffff', marginTop: '0.4rem', lineHeight: 1.4, textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>{s.label}</div>
               </div>
             ))}
           </motion.div>
@@ -192,7 +203,7 @@ export default function Hero() {
           transition={{ delay: 3, duration: 1 }}
           style={{
             position: 'absolute',
-            right: '3rem',
+            left: '3rem',
           top: '48%',
           transform: 'translateY(-50%)',
           display: 'flex',
@@ -207,8 +218,8 @@ export default function Hero() {
         <div style={{ 
           width: '1px', 
           height: '60px', 
-          background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.3))',
-          boxShadow: '0 0 10px rgba(0, 106, 255, 0.2)'
+          background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,1))',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
         }} />
           
           {[
@@ -229,12 +240,13 @@ export default function Hero() {
                 textShadow: '0 0 8px rgba(255,255,255,0.8)'
               }}
               style={{
-                color: 'rgba(255,255,255,0.6)',
+                color: '#ffffff',
                 transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 padding: '0.5rem',
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.8))',
               }}
             >
               {typeof social.Icon === 'function' ? <social.Icon /> : <social.Icon size={24} strokeWidth={1.5} />}
@@ -244,8 +256,8 @@ export default function Hero() {
           <div style={{ 
             width: '1px', 
             height: '60px', 
-            background: 'linear-gradient(to top, transparent, rgba(255,255,255,0.3))',
-            boxShadow: '0 0 10px rgba(0, 106, 255, 0.2)'
+            background: 'linear-gradient(to top, transparent, rgba(255,255,255,1))',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
           }} />
         </motion.div>
       </div>
@@ -294,6 +306,7 @@ export default function Hero() {
             position: relative !important;
             flex-direction: row !important;
             right: auto !important;
+            left: auto !important;
             top: auto !important;
             transform: none !important;
             margin-top: 3rem;

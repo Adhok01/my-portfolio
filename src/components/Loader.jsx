@@ -47,16 +47,26 @@ export default function Loader() {
           style={{
             position: 'fixed', inset: 0, zIndex: 10000,
             background: '#020408',
+            backgroundImage: 'url("/hero-bg.png")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center right',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
           }}
         >
+          {/* Darker overlay for loader - darker on the left/center */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(circle at center, rgba(2, 4, 8, 0.5) 0%, rgba(2, 4, 8, 0.9) 100%)',
+            zIndex: 1
+          }} />
           {/* Grid background */}
           <div style={{
             position: 'absolute', inset: 0,
             backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
             backgroundSize: '60px 60px',
             maskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%)',
+            zIndex: 1
           }} />
 
           {/* Name reveal */}
@@ -70,8 +80,8 @@ export default function Loader() {
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: 'clamp(1.5rem, 4vw, 3rem)',
-                  fontWeight: 700,
-                  letterSpacing: '0.1em',
+                  fontWeight: 900,
+                  letterSpacing: '0.15em',
                   background: 'linear-gradient(135deg, #0066FF, #00D4FF, #0066FF)',
                   backgroundSize: '200%',
                   WebkitBackgroundClip: 'text',
@@ -145,11 +155,11 @@ export default function Loader() {
                 style={{
                   fontFamily: "'Syne', sans-serif",
                   fontSize: '3.5rem',
-                  fontWeight: 800,
+                  fontWeight: 900,
                   letterSpacing: '0.15em',
                   color: '#ffffff',
                   textTransform: 'uppercase',
-                  textShadow: '0 0 30px rgba(0, 102, 255, 0.8), 0 0 60px rgba(0, 102, 255, 0.4)',
+                  textShadow: '0 0 30px rgba(0, 102, 255, 1), 0 0 60px rgba(0, 102, 255, 0.6), 0 10px 20px rgba(0,0,0,0.8)',
                   position: 'relative', zIndex: 2
                 }}
               >
