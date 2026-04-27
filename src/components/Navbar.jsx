@@ -7,6 +7,7 @@ import { useTheme } from '@/context/ThemeContext'
 import { Sun, Moon, Sparkles } from 'lucide-react'
 
 const links = [
+  { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#education', label: 'Education' },
   { href: '#skills', label: 'Skills' },
@@ -114,15 +115,6 @@ export default function Navbar() {
             {theme === 'light' && <Sun size={16} />}
           </button>
 
-          <a
-            href={portfolioData.personal.resume}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-primary"
-            style={{ padding: '0.5rem 1.2rem', fontSize: '0.72rem' }}
-          >
-            <span>Resume ↓</span>
-          </a>
           {/* Hamburger */}
           <button
             onClick={() => setMobileOpen(o => !o)}

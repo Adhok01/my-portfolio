@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import { portfolioData } from '@/data/portfolio'
 
 const { personal } = portfolioData
@@ -72,25 +73,51 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setStatus('sending')
+
+    const serviceID = 'service_9rvbun4'
+    const templateID = 'template_led517i'
+    const publicKey = 'S3nvRQdoqIxkWn0gf'
+
+    console.log('Using hardcoded keys for testing...')
+
+    if (!serviceID || !templateID || !publicKey) {
+      console.error('EmailJS credentials missing from environment variables')
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 3000)
+      return
+    }
+
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (res.ok) {
+      emailjs.init(publicKey)
+      const templateParams = {
+        from_name: form.name,
+        from_email: form.email,
+        subject: form.subject,
+        message: form.message,
+        to_name: personal.name,
+      }
+
+      const res = await emailjs.send(serviceID, templateID, templateParams, publicKey)
+      console.log('EmailJS Response:', res)
+
+      if (res.status === 200) {
         setStatus('sent')
         setForm({ name: '', email: '', subject: '', message: '' })
         setTimeout(() => setStatus('idle'), 4000)
       } else {
         setStatus('error')
-        setTimeout(() => setStatus('idle'), 3000)
+        setErrorMsg(res.text || 'Failed to send')
+        setTimeout(() => setStatus('idle'), 5000)
       }
-    } catch {
+    } catch (error) {
+      console.error('EmailJS Error:', error)
       setStatus('error')
-      setTimeout(() => setStatus('idle'), 3000)
+      setErrorMsg(error?.text || error?.message || 'Check Console')
+      setTimeout(() => setStatus('idle'), 5000)
     }
   }
+
+  const [errorMsg, setErrorMsg] = useState('')
 
   const fieldStyle = (name) => ({
     width: '100%',
@@ -227,7 +254,7 @@ export default function Contact() {
                     {status === 'idle' && 'Send Message →'}
                     {status === 'sending' && 'Sending…'}
                     {status === 'sent' && '✓ Message Sent'}
-                    {status === 'error' && 'Error — Try Again'}
+                    {status === 'error' && `Error: ${errorMsg}`}
                   </motion.span>
                 </AnimatePresence>
               </motion.button>

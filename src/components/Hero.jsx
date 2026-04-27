@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Instagram, Mail, ExternalLink } from 'lucide-react'
+import { Github, Linkedin, Instagram, Mail, ExternalLink, Home } from 'lucide-react'
 import { portfolioData } from '@/data/portfolio'
 import Counter from '@/components/Counter'
 import Butterfly from '@/components/Butterfly'
@@ -187,10 +187,10 @@ export default function Hero() {
                 <div style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: '2.6rem', fontWeight: 800,
-                  color: '#ffffff', lineHeight: 1,
-                  textShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                  color: '#0066FF', lineHeight: 1,
+                  textShadow: '0 0 15px rgba(0, 102, 255, 0.4), 0 4px 12px rgba(0,0,0,0.4)',
                 }}><Counter value={s.num} /></div>
-                <div style={{ fontSize: '0.85rem', color: '#ffffff', marginTop: '0.4rem', lineHeight: 1.4, textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>{s.label}</div>
+                <div style={{ fontSize: '0.85rem', color: '#4D94FF', marginTop: '0.4rem', lineHeight: 1.4, textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, textShadow: '0 0 8px rgba(0, 102, 255, 0.2), 0 2px 4px rgba(0,0,0,0.5)' }}>{s.label}</div>
               </div>
             ))}
           </motion.div>

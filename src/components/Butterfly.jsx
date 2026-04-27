@@ -46,9 +46,11 @@ export default function Butterfly() {
   return (
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 10 }}>
       {/* Lagging Tail Particles for motion blur effect */}
-      <TailParticle targetX={x} targetY={y} size={8} delay={0.05} opacity={0.6} />
-      <TailParticle targetX={x} targetY={y} size={5} delay={0.12} opacity={0.4} />
-      <TailParticle targetX={x} targetY={y} size={3} delay={0.2} opacity={0.2} />
+      <TailParticle targetX={x} targetY={y} size={10} delay={0.03} opacity={0.8} />
+      <TailParticle targetX={x} targetY={y} size={8} delay={0.06} opacity={0.6} />
+      <TailParticle targetX={x} targetY={y} size={6} delay={0.09} opacity={0.4} />
+      <TailParticle targetX={x} targetY={y} size={4} delay={0.12} opacity={0.3} />
+      <TailParticle targetX={x} targetY={y} size={2} delay={0.15} opacity={0.2} />
 
       {/* The Butterfly */}
       <motion.div
@@ -63,7 +65,7 @@ export default function Butterfly() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          filter: 'drop-shadow(0 0 15px #00D4FF) drop-shadow(0 0 5px #ffffff)'
+          filter: 'drop-shadow(0 0 20px #00D4FF) drop-shadow(0 0 10px #ffffff)'
         }}
       >
         <motion.div
@@ -86,9 +88,9 @@ export default function Butterfly() {
 }
 
 function TailParticle({ targetX, targetY, size, delay, opacity }) {
-  // Use springs with high lag for a smooth trail
-  const sx = useSpring(targetX, { damping: 30, stiffness: 50 })
-  const sy = useSpring(targetY, { damping: 30, stiffness: 50 })
+  // Use springs with higher stiffness for a tighter trail
+  const sx = useSpring(targetX, { damping: 25, stiffness: 80 })
+  const sy = useSpring(targetY, { damping: 25, stiffness: 80 })
 
   // Force re-renders based on parent x/y
   useEffect(() => {
@@ -120,8 +122,8 @@ function TailParticle({ targetX, targetY, size, delay, opacity }) {
         x: '-50%',
         y: '-50%',
         opacity: opacity,
-        filter: 'blur(2px)',
-        boxShadow: '0 0 12px #00D4FF',
+        filter: 'blur(1px)',
+        boxShadow: '0 0 15px #00D4FF, 0 0 5px #ffffff',
       }}
     />
   )

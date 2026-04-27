@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { portfolioData } from '@/data/portfolio'
 
 const navLinks = [
+  { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#skills', label: 'Skills' },
   { href: '#experience', label: 'Experience' },
