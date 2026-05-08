@@ -86,3 +86,5 @@ Done. Your site goes live at `your-project.vercel.app`
 3. Add environment variables from `.env.local`
 4. Deploy — automatic HTTPS + custom domain support
 # my-portfolio
+<img width="1679" height="887" alt="Screenshot 2026-05-09 at 1 24 00 AM" src="https://github.com/user-attachments/assets/e0434d1e-0fbd-46b8-a3d4-8aa27cfe38df" />
+
